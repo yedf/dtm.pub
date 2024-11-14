@@ -56,3 +56,38 @@ DTM重试时采用退避算法，如果重试失败，则会加倍重试间隔�
 HTTP和gRPC都支持自定义header，详情可以参考[dtm-examples](https://github.com/dtm-labs/dtm-examples)名字中带有Header的例子
 
 可以在示例项目中搜索 BranchHeaders ，查看相关的例子
+
+## Concurrent
+
+是否并发执行，比如saga默认是顺序执行，开启了可以并发，具体看[seata高级用法](https://dtm.pub/practice/saga.html#%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95)
+
+## Retry
+
+**RetryInterval**
+
+重试的时间间隔，单位second，需要和RetryLimit同时开启
+
+如果不指定或只指定RetryInterval没有开启RetryLimit，则使用默认的指数算法4，8，16，32
+
+
+
+**RetryLimit**
+
+限制重试次数，重试次数结束后会回滚
+
+如果设定了这个，又没有设置RetryInterval，则会立马重试完所有次数
+
+如果RetryLimit和RetryInterval同时开启，则会使用RetryInterval的间隔时间
+
+
+
+**RetryCount**
+
+指数增长的重试次数，如果设置了这个，那么RetryInterval失效
+
+RetryInterval以默认的算法递增时间，比如4,8,16,32，那么这里就递增了3次，也代表重试了3次
+
+
+
+
+
